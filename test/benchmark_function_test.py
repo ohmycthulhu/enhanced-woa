@@ -14,7 +14,7 @@ def test():
     # 3. Test evaluation
 
     # Initialization
-    hyperparameters = ['x', 'y', 'z']
+    hyperparameters = ['x', 'y']
     defaults = {'x': 0}
     dimension = 1
     value_constraints = [
@@ -30,25 +30,25 @@ def test():
     )
 
     # Hyper parameters test
-    if not test_helpers.expect_error(
-            lambda: func1.set_hyperparams({'x': 10}),
-            'Hyper parameter validation failed',
-            'Hyper parameter validation works'
-    ):
+    try:
+        func1.hyperparams = ({'x': 10})
+        print('Hyper parameter validation failed')
+        return False
+    except AttributeError:
+        print('Hyper parameter validation works')
+
+    try:
+        func1.hyperparams = {'y': 10}
+        print('Hyper parameter defaults work')
+    except AttributeError as e:
+        print('Hyper parameter defaults do not work')
         return False
 
-    if not test_helpers.expect_no_error(
-            lambda: func1.set_hyperparams({'y': 10}),
-            'Hyper parameter defaults do not work',
-            'Hyper parameter defaults work'
-    ):
-        return False
-
-    if not test_helpers.expect_no_error(
-            lambda: func1.set_hyperparams({'x': 10, 'y': 20}),
-            'Hyper parameter defaults do not work',
-            'Hyper parameter defaults work'
-    ):
+    try:
+        func1.hyperparams = {'x': 10, 'y': 20}
+        print('Hyper parameter defaults work')
+    except AttributeError:
+        print('Hyper parameter defaults do not work')
         return False
 
     # Evaluation test
