@@ -40,3 +40,6 @@ class ExecutionOptions:
     @property
     def evaluation_count(self):
         return self._evaluation_count
+
+    def reset_evaluation_counter(self):
+        self._evaluation_count = 0

@@ -1,5 +1,6 @@
 from src.benchmark_function import BenchmarkFunction
 import test_helpers
+import factory
 
 
 def test():
@@ -14,20 +15,7 @@ def test():
     # 3. Test evaluation
 
     # Initialization
-    hyperparameters = ['x', 'y']
-    defaults = {'x': 0}
-    dimension = 1
-    value_constraints = [
-        {'min': -10, 'max': 10}
-    ]
-
-    func1 = BenchmarkFunction(
-        hof=lambda x, y: lambda z: z * (x ** 2 + y),
-        hyperparams=hyperparameters,
-        hyperparameter_defaults=defaults,
-        dimension=dimension,
-        constraints=value_constraints
-    )
+    func1 = factory.get_benchmark_function()
 
     # Hyper parameters test
     try:

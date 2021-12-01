@@ -8,7 +8,7 @@ class BenchmarkFunction:
         self._hyperparams_defaults = hyperparameter_defaults
         self._dimension = dimension
         self._constraints = constraints
-        self._hyperparams = None
+        self._hyperparams = self._hyperparams_defaults.copy()
         self._func = None
 
     @property
@@ -33,7 +33,7 @@ class BenchmarkFunction:
         # - to hyperparameters be set before
         # - to values to be not less than dimension of function
         # - to values to be in constrainted space
-        if self.hyperparams is None:
+        if not self.is_valid():
             raise NotImplementedError("Evaluation is used before setting hyperparameters")
         if len(values) < self._dimension:
             raise AttributeError("Values count mismatch dimensions of evaluating function")
@@ -44,9 +44,8 @@ class BenchmarkFunction:
         return self._func(*values)
 
     # Checks if current hyperparameters are valid
-    # It needs converting to boolean because self._hyperparams may be None
     def is_valid(self):
-        return bool(self._hyperparams and self._validate(self._hyperparams))
+        return self._validate(self._hyperparams)
 
     def _hyperparams_with_defaults(self, params):
         # Merge dictionary of default params with actual params
