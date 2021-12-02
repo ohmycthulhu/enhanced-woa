@@ -13,10 +13,8 @@ def expect_no_error(func, message_error, message_success):
     try:
         func()
         print(message_success)
-        return True
     except:
         print(message_error)
-        raise
         return False
 
     return True
