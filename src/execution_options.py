@@ -1,7 +1,8 @@
 # Class for managing execution options
 class ExecutionOptions:
     DEFAULT_OPTIONS = {
-        'iterations_count': 0,
+        'iterations_count': 200,
+        'population_size': 30,
     }
 
     def __init__(self, function):
@@ -25,11 +26,15 @@ class ExecutionOptions:
 
     @property
     def execution_params(self):
-        return self.execution_params
+        return self._execution_params
+
+    @property
+    def dimension(self):
+        return self._function.dimension
 
     @execution_params.setter
     def execution_params(self, params):
-        self._execution_params = params
+        self._execution_params = {**self._execution_params, **params}
 
     def evaluate(self, *values):
         # Evaluation may throw an error, so we increase evaluation count after ensuring there is no error
@@ -43,3 +48,9 @@ class ExecutionOptions:
 
     def reset_evaluation_counter(self):
         self._evaluation_count = 0
+
+    def generate_params(self, count):
+        return self._function.generate_random(count)
+
+    def constraint_params(self, params):
+        return self._function.constraint_params(params)

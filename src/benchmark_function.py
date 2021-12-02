@@ -1,6 +1,15 @@
 import numpy as np
 
 
+def is_prime(n):
+    if n % 2 == 0 and n > 2:
+        return False
+    for i in range(3, int(np.sqrt(n)) + 1, 2):
+        if n % i == 0:
+            return False
+    return True
+
+
 class BenchmarkFunction:
     def __init__(self, hof, hyperparams, hyperparameter_defaults, dimension, constraints):
         self._hof = hof
@@ -73,3 +82,57 @@ class BenchmarkFunction:
                 return False
 
         return True
+
+    # Generate random params
+    def generate_random(self, count):
+        bounds = [
+            [self._get_lower_bound(i), self._get_upper_bound(i)] for i in range(self._dimension)
+        ]
+
+        result = []
+        _rho = self._get_minimum_prime_number(count)
+
+        for j in range(1, count + 1):
+            rho = 2 * np.cos(2 * np.pi * j / _rho)
+            result.append([
+                bounds[i][0] + (bounds[i][1] - bounds[i][0]) * ((rho * (i + 1)) % 1)
+                for i, bound in enumerate(bounds)
+            ])
+
+        return np.array(result)
+
+    @staticmethod
+    def _get_minimum_prime_number(m):
+        res = 2 * m + 3
+        while not is_prime(res):
+            res += 2
+        return res
+
+    def _get_upper_bound(self, index):
+        constraint = self._constraints[index]
+        if constraint is not None and 'max' in constraint:
+            return constraint['max']
+        return 1e4
+
+    def _get_lower_bound(self, index):
+        constraint = self._constraints[index]
+        if constraint is not None and 'min' in constraint:
+            return constraint['min']
+        return -1e4
+
+    def constraint_params(self, params):
+        res = params.copy()
+
+        for i, param in enumerate(params):
+            b_l, b_u = self._get_lower_bound(i), self._get_upper_bound(i)
+            if param < b_l:
+                res[i] = b_l
+            elif param > b_u:
+                res[i] = b_u
+
+        return res
+
+    @property
+    def dimension(self):
+        return self._dimension
+

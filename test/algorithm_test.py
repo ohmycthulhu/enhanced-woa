@@ -2,6 +2,7 @@ from src.execution_options import ExecutionOptions
 from src.algorithm import WOARun
 import test_helpers
 import factory
+import json
 
 
 def test():
@@ -18,10 +19,12 @@ def test():
     # Initialization execution option
     execution_options = ExecutionOptions(function=factory.get_minimization_function())
 
+    execution_options.execution_params = {'iterations_count': 200}
+
     algorithm_run = WOARun(options=execution_options)
 
     # Hyper parameter setting
-    if test_helpers.expect_no_error(
+    if not test_helpers.expect_no_error(
         lambda: algorithm_run.run(),
         'Algorithm run failed',
         'Algorithm run works',
@@ -41,6 +44,11 @@ def test():
 
     if not test_helpers.expect_not_none(result.execution_time):
         return False
+
+    print("Best found parameters", result.best_value, result.best_params, result.evaluation_count)
+
+    with open('whales.json', 'w') as file:
+        json.dump(algorithm_run.history, file)
 
     return True
 
