@@ -3,6 +3,7 @@ class ExecutionOptions:
     DEFAULT_OPTIONS = {
         'iterations_count': 200,
         'population_size': 30,
+        'runs_count': 10,
     }
 
     def __init__(self, function):

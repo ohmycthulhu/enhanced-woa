@@ -1,3 +1,5 @@
+import os.path
+
 def expect_error(func, message_error, message_success):
     try:
         func()
@@ -38,5 +40,14 @@ def expect_not_none(actual):
     if actual is None:
         print(f"Value expected to not be None")
         return False
+    return True
+
+
+def expect_file_exists(actual, remove_file=True):
+    if not os.path.exists(actual):
+        print(f'Could not find expected file - {actual}')
+        return False
+    if remove_file:
+        os.remove(actual)
     return True
 

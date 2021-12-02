@@ -1,7 +1,7 @@
 import numpy as np
 import random
 import time
-import matplotlib.pyplot as plt
+import json
 
 SWITCH_STATE = np.random.random()
 
@@ -13,7 +13,44 @@ def random_switch():
 
 
 class WOA:
-    pass
+    def __init__(self, options):
+        self._options = options
+        self._runs_count = options.execution_params['runs_count']
+        self._current_run = 0
+        self._result = None
+
+    def iterate(self):
+        if self._current_run >= self._runs_count:
+            return
+
+        run = WOARun(options=self._options)
+        result = run.run()
+        self._append_result(result)
+        self._current_run += 1
+
+        return self
+
+    def _append_result(self, result):
+        if self._result is None:
+            self._result = WOAResult(options=self._options)
+
+        self._result.append(result)
+
+    @property
+    def current_iteration(self):
+        return self._current_run
+
+    @property
+    def iterations_left(self):
+        return self._runs_count - self._current_run
+
+    @property
+    def has_started(self):
+        return self._current_run > 0
+
+    @property
+    def result(self):
+        return self._result
 
 
 class WOARun:
@@ -103,8 +140,6 @@ class WOARun:
             else:
                 exploit += 1
                 whale.bubble_net_attack(best_whale)
-
-        print(f"{control_param} - {explore} / #{exploit}")
 
         return whales
 
@@ -224,6 +259,50 @@ class RunResult:
     def evaluation_count(self):
         return self._evaluation_count
 
+    def as_json(self):
+        return {
+            'value': self._best_value,
+            'params': [p for p in self._best_params],
+            'execution_time': self._execution_time,
+            'evaluation_time': self._evaluation_count,
+        }
+
 
 class WOAResult:
-    pass
+    def __init__(self, options):
+        self._options = options
+        self._results = []
+        self._statistics = {'mean': None, 'std': None, 'best': None}
+
+    def _update_statistics(self):
+        if len(self._results) == 0:
+            self._statistics = {'mean': None, 'std': None, 'best': None}
+            return
+
+        values = [r.best_value for r in self._results]
+
+        self._statistics = {
+            'mean': float(np.mean(values)),
+            'std': float(np.std(values)),
+            'best': float(np.min(values)),
+            'mean_execution_time': float(np.mean([r.execution_time for r in self._results])),
+            'function_evaluation_count': int(np.sum([r.evaluation_count for r in self._results])),
+        }
+
+    def append(self, result):
+        self._results.append(result)
+        self._update_statistics()
+
+    def save_json(self, path):
+        with open(path, 'w') as file:
+            json.dump(self.to_json(), file)
+
+    def to_json(self):
+        return {
+            'statistics': self._statistics,
+            'iterations': [r.as_json() for r in self._results]
+        }
+
+    @property
+    def length(self):
+        return len(self._results)
