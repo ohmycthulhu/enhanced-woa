@@ -25,8 +25,8 @@ def get_minimization_function():
     defaults = {'a': 10, 'b': 0.2, 'c': 2 * np.pi}
     dimension = 2
     value_constraints = [
-        {'min': -3276, 'max': 3276},
-        {'min': -3276, 'max': 3276},
+        {'min': -32.76, 'max': 32.76},
+        {'min': -32.76, 'max': 32.76},
     ]
     return BenchmarkFunction(
         hof=lambda a, b, c: lambda *xs: ackley_function(a, b, c, xs),

@@ -49,6 +49,10 @@ class WOA:
         return self._current_run > 0
 
     @property
+    def has_finished(self):
+        return self._current_run >= self._runs_count
+
+    @property
     def result(self):
         return self._result
 
@@ -280,14 +284,23 @@ class WOAResult:
             return
 
         values = [r.best_value for r in self._results]
+        best_result = self._best_result()
 
         self._statistics = {
             'mean': float(np.mean(values)),
             'std': float(np.std(values)),
-            'best': float(np.min(values)),
+            'best': {'value': best_result.best_value, 'params': [x for x in best_result.best_params]},
             'mean_execution_time': float(np.mean([r.execution_time for r in self._results])),
             'function_evaluation_count': int(np.sum([r.evaluation_count for r in self._results])),
         }
+
+    def _best_result(self):
+        min_val, best = np.inf, None
+        for result in self._results:
+            if result.best_value < min_val:
+                best = result
+                min_val = result.best_value
+        return best
 
     def append(self, result):
         self._results.append(result)

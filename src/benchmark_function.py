@@ -109,13 +109,13 @@ class BenchmarkFunction:
         return res
 
     def _get_upper_bound(self, index):
-        constraint = self._constraints[index]
+        constraint = self._constraints[index]  if len(self._constraints) > index else None
         if constraint is not None and 'max' in constraint:
             return constraint['max']
         return 1e4
 
     def _get_lower_bound(self, index):
-        constraint = self._constraints[index]
+        constraint = self._constraints[index] if len(self._constraints) > index else None
         if constraint is not None and 'min' in constraint:
             return constraint['min']
         return -1e4
