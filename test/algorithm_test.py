@@ -53,7 +53,6 @@ def test():
     return True
 
 
-
 def complete_algorithm_run_test():
     runs_count = 10
     execution_options = ExecutionOptions(function=factory.get_minimization_function())

@@ -1,5 +1,6 @@
 import os.path
 
+
 def expect_error(func, message_error, message_success):
     try:
         func()
@@ -50,4 +51,3 @@ def expect_file_exists(actual, remove_file=True):
     if remove_file:
         os.remove(actual)
     return True
-

@@ -11,7 +11,7 @@ def is_prime(n):
 
 
 class BenchmarkFunction:
-    def __init__(self, hof, hyperparams, hyperparameter_defaults, dimension, constraints):
+    def __init__(self, hof, hyperparams, hyperparameter_defaults, dimension, constraints, name=None):
         self._hof = hof
         self._hyperparams_list = hyperparams
         self._hyperparams_defaults = hyperparameter_defaults
@@ -19,6 +19,7 @@ class BenchmarkFunction:
         self._constraints = constraints
         self._hyperparams = self._hyperparams_defaults.copy()
         self._func = None
+        self._name = name
 
     @property
     def all_hyperparams(self):
@@ -136,3 +137,6 @@ class BenchmarkFunction:
     def dimension(self):
         return self._dimension
 
+    @property
+    def name(self):
+        return self._name

@@ -44,6 +44,10 @@ class ExecutionOptions:
         return result
 
     @property
+    def function_name(self):
+        return self._function.name
+
+    @property
     def evaluation_count(self):
         return self._evaluation_count
 

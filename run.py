@@ -24,6 +24,7 @@ def run_function(path, benchmark_function):
 
 
 function_ackerman = BenchmarkFunction(
+    name='Ackerman Function',
     hof=lambda a, b, c: lambda *xs: functions.ackley_function(a, b, c, xs),
     hyperparams=['a', 'b', 'c'],
     hyperparameter_defaults={'a': 20, 'b': 0.2, 'c': 2 * 3.1415},
@@ -32,6 +33,7 @@ function_ackerman = BenchmarkFunction(
 )
 
 function_rastrigin = BenchmarkFunction(
+    name='Rastrigin Function',
     hof=lambda: lambda *xs: functions.rastrigin_function(xs),
     hyperparams=[],
     hyperparameter_defaults={},
@@ -40,6 +42,7 @@ function_rastrigin = BenchmarkFunction(
 )
 
 function_rosenblock = BenchmarkFunction(
+    name='Rosenblock Function',
     hof=lambda: lambda *xs: functions.rosenbrok_function(xs),
     hyperparams=[],
     hyperparameter_defaults={},
@@ -48,6 +51,7 @@ function_rosenblock = BenchmarkFunction(
 )
 
 function_schwefel = BenchmarkFunction(
+    name='Schwefel Function',
     hof=lambda: lambda *xs: functions.schwefel_function(xs),
     hyperparams=[],
     hyperparameter_defaults={},
@@ -56,7 +60,14 @@ function_schwefel = BenchmarkFunction(
 )
 
 
+print('Running optimization for ackerman function')
 run_function('results/ackerman.json', function_ackerman)
-# run_function('results/rastrigin.json', function_rastrigin)
-# run_function('results/rosenblock.json', function_rosenblock)
-# run_function('results/shwefel.json', function_schwefel)
+
+print('Running optimization for rastrigin function')
+run_function('results/rastrigin.json', function_rastrigin)
+
+print('Running optimization for rosenblock function')
+run_function('results/rosenblock.json', function_rosenblock)
+
+print('Running optimization for Schwefel function')
+run_function('results/schwefel.json', function_schwefel)
