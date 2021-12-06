@@ -22,11 +22,11 @@ def get_benchmark_function():
 
 def get_minimization_function():
     hyperparameters = ['a', 'b', 'c']
-    defaults = {'a': 20, 'b': 0.2, 'c': 2 * np.pi}
+    defaults = {'a': 10, 'b': 0.2, 'c': 2 * np.pi}
     dimension = 2
     value_constraints = [
-        {'min': -32768, 'max': 32768},
-        {'min': -32768, 'max': 32768},
+        {'min': -32.76, 'max': 32.76},
+        {'min': -32.76, 'max': 32.76},
     ]
     return BenchmarkFunction(
         hof=lambda a, b, c: lambda *xs: ackley_function(a, b, c, xs),
