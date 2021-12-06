@@ -15,7 +15,7 @@ def rastrigin_function(xs):
 
 def rosenbrok_function(xs):
     return sum([
-        (100 * (xs[i + 1] - xs[i]**2)) + (xs[i] - 1)**2
+        (100 * (xs[i + 1] - xs[i]**2)**2) + (xs[i] - 1)**2
         for i in range(len(xs) - 1)
     ])
 
