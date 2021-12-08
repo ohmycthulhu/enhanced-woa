@@ -14,6 +14,10 @@ class ExecutionOptions:
     def is_valid(self):
         return self._function.is_valid()
 
+    @staticmethod
+    def validate_execution_param(name, value):
+        return value > 0
+
     @property
     def hyper_params(self):
         return self._function.hyperparams

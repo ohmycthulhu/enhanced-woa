@@ -1,4 +1,5 @@
 import numpy as np
+from src import functions
 
 
 def is_prime(n):
@@ -140,3 +141,39 @@ class BenchmarkFunction:
     @property
     def name(self):
         return self._name
+
+AVAILABLE_FUNCTIONS = [
+    BenchmarkFunction(
+        name='Ackerman Function',
+        hof=lambda a, b, c: lambda *xs: functions.ackley_function(a, b, c, xs),
+        hyperparams=['a', 'b', 'c'],
+        hyperparameter_defaults={'a': 20, 'b': 0.2, 'c': 2 * 3.1415},
+        dimension=30,
+        constraints=[{'min': -32.768, 'max': 32.768} for _ in range(30)],
+    ),
+    BenchmarkFunction(
+        name='Rastrigin Function',
+        hof=lambda: lambda *xs: functions.rastrigin_function(xs),
+        hyperparams=[],
+        hyperparameter_defaults={},
+        dimension=30,
+        constraints=[{'min': -5.12, 'max': 5.12} for _ in range(30)],
+    ),
+    BenchmarkFunction(
+        name='Rosenblock Function',
+        hof=lambda: lambda *xs: functions.rosenbrok_function(xs),
+        hyperparams=[],
+        hyperparameter_defaults={},
+        dimension=30,
+        constraints=[{'min': -2.048, 'max': 2.048} for _ in range(30)],
+    ),
+    BenchmarkFunction(
+        name='Schwefel Function',
+        hof=lambda: lambda *xs: functions.schwefel_function(xs),
+        hyperparams=[],
+        hyperparameter_defaults={},
+        dimension=30,
+        constraints=[{'min': -500, 'max': 500} for _ in range(30)],
+    )
+]
+

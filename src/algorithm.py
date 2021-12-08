@@ -32,7 +32,7 @@ class WOA:
 
     def _append_result(self, result):
         if self._result is None:
-            self._result = WOAResult(options=self._options)
+            self._result = WOAResult(function_name=self._options.function_name)
 
         self._result.append(result)
 

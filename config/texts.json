@@ -1,0 +1,47 @@
+{
+  "en": {
+    "ui": {
+      "greetings": "Welcome to the Enhanced Whale Optimization Algorithm!",
+      "select_screen": "Choose the screen to proceed",
+      "go_back": "Go back",
+      "next": "Next",
+      "results": {
+        "header": "Welcome to the results",
+        "brief": "Here are statistical information about results",
+        "detailed": "Here are detailed information about each run",
+        "func_name": "Function: {name}",
+        "best": "Best result: {value}",
+        "mean": "Mean: {mean}",
+        "std": "Std: {std}",
+        "evaluation_count": "Function evaluation count: {count}"
+      },
+      "execution": {
+        "header": "Execution Options Screen",
+        "chosen_function": "Current chosen function is {name}",
+        "choose_function": "Choose function to evaluate",
+        "current_hyper_param": "{name} = {value}"
+      },
+      "progress": {
+        "current_progress": "Running the algorithm. Current progress {index}/{max}"
+      }
+    },
+    "screens": {
+      "main": "Main Screen",
+      "results": "Results Screen",
+      "results_brief": "Brief results statistics",
+      "results_detailed": "Detailed results",
+      "execution": "Execution Screen",
+      "progress": "Progress Screen"
+    },
+    "input": {
+      "numeric_input_min_max": "Input value for {name} ({min} <= x <= {max}): ",
+      "numeric_input_max": "Input value for {name} (x <= {max}): ",
+      "numeric_input_min": "Input value for {name} ({min} <= x): ",
+      "numeric_input": "Input value for {name}: ",
+      "options": {
+        "request": "Choose an option: ",
+        "option": "[{index}] {name}"
+      }
+    }
+  }
+}

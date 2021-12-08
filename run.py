@@ -7,9 +7,9 @@ from src.benchmark_function import BenchmarkFunction
 def run_function(path, benchmark_function):
     execution_options = ExecutionOptions(function=benchmark_function)
     execution_options.execution_params = {
-        'runs_count': 30,
+        'runs_count': 10,
         'population_size': 30,
-        'iterations_count': 2000,
+        'iterations_count': 200,
     }
 
     algorithm = WOA(options=execution_options)
@@ -60,14 +60,14 @@ function_schwefel = BenchmarkFunction(
 )
 
 
-print('Running optimization for ackerman function')
-run_function('results/ackerman.json', function_ackerman)
-
-print('Running optimization for rastrigin function')
-run_function('results/rastrigin.json', function_rastrigin)
-
-print('Running optimization for rosenblock function')
-run_function('results/rosenblock.json', function_rosenblock)
+# print('Running optimization for ackerman function')
+# run_function('results/ackerman.json', function_ackerman)
+#
+# print('Running optimization for rastrigin function')
+# run_function('results/rastrigin.json', function_rastrigin)
+#
+# print('Running optimization for rosenblock function')
+# run_function('results/rosenblock.json', function_rosenblock)
 
 print('Running optimization for Schwefel function')
 run_function('results/schwefel.json', function_schwefel)

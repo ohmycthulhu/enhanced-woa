@@ -1,5 +1,6 @@
 import numpy as np
 import json
+from src.ui.input_manager import InputManager
 
 
 class RunResult:
@@ -33,12 +34,21 @@ class RunResult:
             'evaluation_time': self._evaluation_count,
         }
 
+    @staticmethod
+    def from_json(data):
+        return RunResult(
+            best_value=data.get('value'),
+            best_params=np.array(data.get('params', [])),
+            evaluation_count=data.get('evaluation_time'),
+            execution_time=data.get('execution_time'),
+        )
+
 
 class WOAResult:
-    def __init__(self, options):
-        self._options = options
-        self._results = []
-        self._statistics = {'mean': None, 'std': None, 'best': None}
+    def __init__(self, function_name, results=None, statistics=None):
+        self._function_name = function_name
+        self._results = results if results is not None else []
+        self._statistics = statistics if statistics is not None else {'mean': None, 'std': None, 'best': None}
 
     def _update_statistics(self):
         if len(self._results) == 0:
@@ -69,16 +79,37 @@ class WOAResult:
         self._update_statistics()
 
     def save_json(self, path):
-        with open(path, 'w') as file:
-            json.dump(self.to_json(), file)
+        InputManager.get_instance().save_json(self.to_json(), path)
 
     def to_json(self):
         return {
-            'name': self._options.function_name,
+            'name': self._function_name,
             'statistics': self._statistics,
             'iterations': [r.as_json() for r in self._results]
         }
 
+    @staticmethod
+    def from_json(data):
+        results = [RunResult.from_json(it) for it in data.get('iterations', [])]
+
+        return WOAResult(
+            function_name=data.get('name'),
+            results=results,
+            statistics=data.get('statistics'),
+        )
+
     @property
     def length(self):
         return len(self._results)
+
+    @property
+    def statistics(self):
+        return self._statistics
+
+    @property
+    def iterations(self):
+        return self._results
+
+    @property
+    def function_name(self):
+        return self._function_name
