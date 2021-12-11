@@ -4,6 +4,8 @@
       "greetings": "Welcome to the Enhanced Whale Optimization Algorithm!",
       "select_screen": "Choose the screen to proceed",
       "go_back": "Go back",
+      "close_application": "Close Application",
+      "goodbye": "Goodbye!",
       "next": "Next",
       "results": {
         "header": "Welcome to the results",

@@ -4,6 +4,9 @@ from src.ui.input import OptionsInputRequest
 from src.ui.text import Text
 
 
+# Class for displaying the results
+# It allows displaying in either brief or detailed view
+# User can move from here only to the MainScreen
 class ResultsScreen(Screen):
     def __init__(self, manager, results):
         super().__init__(manager)

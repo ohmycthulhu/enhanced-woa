@@ -4,6 +4,8 @@ from src.ui.input_manager import InputManager
 from src.ui.text import Text
 
 
+# Class for displaying the current progress of the running algorithm
+# If there are no iterations left, saves the results in JSON file and navigates the user to ResultsScreen
 class ProgressScreen(Screen):
     def render(self):
         current_iteration, iterations_left = self._manager.application.algorithm_progress

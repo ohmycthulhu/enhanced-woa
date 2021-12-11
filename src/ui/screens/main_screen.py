@@ -7,6 +7,9 @@ from src.ui.screens.results_screen import ResultsScreen
 from src.results import WOAResult
 
 
+# Class for the main screen
+# It checks whether the last results are available, navigate user to the ExecutionScreen or ResultsScreen
+# For navigating to the ResultsScreen, it loads results from JSON file and creates the screen
 class MainScreen(Screen):
     LAST_RESULTS = 'results/results.json'
 
@@ -24,15 +27,20 @@ class MainScreen(Screen):
             return
 
         screen = self._get_screen(chosen_index)
-        self._manager.go_to_screen(screen)
+        if screen is not None:
+            self._manager.go_to_screen(screen)
+        else:
+            self._manager.terminate()
 
     def _get_options(self):
-        available_screens = [Text.get_text('screens.execution')]
+        available_screens = [
+            Text.get_text('screens.execution'),
+        ]
 
         if self._last_results_exists():
             available_screens.append(Text.get_text('screens.results'))
 
-        return available_screens
+        return available_screens + [Text.get_text('ui.close_application')]
 
     def _last_results_exists(self):
         return InputManager.get_instance().file_exists(self.LAST_RESULTS)

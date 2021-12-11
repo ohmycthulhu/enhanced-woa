@@ -1,3 +1,5 @@
+# Base class for screens
+# Each screen should provide `render` and optional `terminate` functions
 class Screen:
     def __init__(self, manager):
         self._manager = manager

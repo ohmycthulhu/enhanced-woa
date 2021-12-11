@@ -3,6 +3,9 @@ import os
 import json
 
 
+# Singleton class that handles the implementation of UI interaction
+# Allows reading and printing the messages to the user
+# For getting certain input, user provides InputRequest that handles constraints and specifics of some request
 class InputManager:
     _instance = None
 
@@ -20,6 +23,9 @@ class InputManager:
 
     def print(self, text):
         print(text)
+
+    def read_input(self, msg=''):
+        return input(msg)
 
     def file_exists(self, path):
         return exists(path)

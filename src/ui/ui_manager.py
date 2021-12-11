@@ -1,6 +1,11 @@
 from src.ui.input_manager import InputManager
+from src.ui.text import Text
 
 
+# Main class for interacting with UI
+# Creates and manages the screens (Screen)
+# Provides the interface for starting and updating screens
+# Also, provides interface for Screens to interact with the rest of the application
 class UIManager:
     def __init__(self, application):
         self._application = application
@@ -28,6 +33,8 @@ class UIManager:
         self._current_screen.terminate()
         for screen in self._screens:
             screen.terminate()
+        self._current_screen = None
+        InputManager.get_instance().print(Text.get_text('ui.goodbye'))
 
     def go_back(self):
         screen = self._screens.pop()

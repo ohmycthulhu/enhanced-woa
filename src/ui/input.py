@@ -2,14 +2,18 @@ from src.ui.input_manager import InputManager
 from src.ui.text import Text
 
 
+# The base class for requesting the input from user
+# Provides interface for the rest requests
+# This class provides reading, and the list of necessary methods
+# Other classes should implement methods other that `get_input`
 class InputRequest:
     def print(self):
         pass
 
     def get_input(self):
-        val = input(self._get_msg())
+        val = InputManager.get_instance().read_input(self._get_msg())
         while not self._is_valid(val) and not self._return_none(val):
-            val = input(self._get_msg())
+            val = InputManager.get_instance().read_input(self._get_msg())
         return self._parse_input(val) if not self._return_none(val) else None
 
     def _is_valid(self, inp):
@@ -25,6 +29,8 @@ class InputRequest:
         return 'Not implemented'
 
 
+# Class for requesting number input
+# May or may not check whether the input is within the range and have mode to work with integers only
 class NumberInputRequest(InputRequest):
     def __init__(self, name, range_min=None, range_max=None, int_only=False):
         self._name = name
@@ -65,6 +71,8 @@ class NumberInputRequest(InputRequest):
             return 'input.numeric_input_min_max'
 
 
+# Class for getting the input within provided options
+# Handles the regulation of whether the user input within the options range
 class OptionsInputRequest(InputRequest):
     def __init__(self, msg, option_names):
         self._msg = msg

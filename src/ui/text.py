@@ -1,6 +1,11 @@
 import json
 
 
+# Singleton class for accessing text
+# Makes base for internationalization, but doesn't provide language other than English
+# Reads JSON file and stores the content in the memory
+# For accessing the file, the user uses Text.get_text(key, {}) syntax
+# key is point-separated list of keys. E.g. "some.key.to.value" translated to data['some']['key']['to']['value']
 class Text:
     _instance = None
 
