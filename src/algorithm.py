@@ -6,12 +6,18 @@ from src.results import WOAResult, RunResult
 SWITCH_STATE = np.random.random()
 
 
+# Fuch function for chaotic switching
 def random_switch():
     global SWITCH_STATE
     SWITCH_STATE = np.cos(1 / SWITCH_STATE ** 2)
     return SWITCH_STATE
 
 
+# Class for managing multiple runs of Whale Optimization Algorithm
+# It is responsible for:
+# - holding the results of all runs
+# - iteratively run algorithm, append the result to the all results
+# - provide information about how many runs have been and how many left to do
 class WOA:
     def __init__(self, options):
         self._options = options
@@ -57,6 +63,13 @@ class WOA:
         return self._result
 
 
+# Class for running the single run of Whale Optimization Algorithm
+# It is responsible for:
+# - Initializing the agents
+# - Running provided amount of iterations
+# - Holding the best found results
+# - Providing the found results
+# - Holding the history of agents over the iterations
 class WOARun:
     def __init__(self, options):
         self._options = options
@@ -71,6 +84,13 @@ class WOARun:
         return self._result
 
     def run(self):
+        # The steps of algorithm:
+        # - reset all counters, best values, and evaluation counters
+        # - initialize the agents
+        # - iterations time:
+        #   - perform iteration
+        #   - save the iteration information in history
+        # - save and return the results
         start_time = time.time()
         self._options.reset_evaluation_counter()
         best_value, best_params = np.inf, []
@@ -82,7 +102,7 @@ class WOARun:
             t = self._calculate_control_parameter(i)
             self._perform_iteration(t, whales)
             best_value, best_params = self._get_best_values(whales, best_value, best_params)
-            self._add_to_history('Initialize', whales)
+            self._add_to_history(f"Iteration #{i}", whales)
 
         execution_time = time.time() - start_time
 
@@ -90,14 +110,16 @@ class WOARun:
             best_value=best_value,
             best_params=best_params,
             execution_time=execution_time,
-            evaluation_count=self._options.evaluation_count
+            evaluation_count=self._options.evaluation_count,
         )
 
         return self._result
 
     def _initialize(self):
+        # Generate params by GPS provided by BenchmarkFunction
         params_list = self._options.generate_params(self._population_size)
 
+        # Map each params set into agent
         return [
             Whale(
                 params=params,
@@ -130,19 +152,15 @@ class WOARun:
     def _perform_iteration(self, control_param, whales):
         best_whale = WOARun._get_best_whale(whales)
 
-        explore, exploit = 0, 0
         for whale in whales:
             if random_switch() < 0.5:
                 A = 2 * control_param * self._get_r() - control_param
 
                 if np.linalg.norm(A) < 1.0:
-                    exploit += 1
                     whale.encircle_prey(best_whale, A)
                 else:
-                    explore += 1
                     whale.search_prey(WOARun._get_random_whale(whales, whale), A)
             else:
-                exploit += 1
                 whale.bubble_net_attack(best_whale)
 
         return whales
@@ -176,6 +194,13 @@ class WOARun:
         return random_whale
 
 
+# Single agent in Whale Optimization Algorithm
+# Implements methods for movement types:
+# - Bubble-net attack
+# - Encircling prey
+# - Search for prey
+# Contains fitness parameter that is automatically calculated by the ExecutionOptions
+# Also, contains ID for checking equality between the two whales
 class Whale:
     ID = 1
     b = 0.5

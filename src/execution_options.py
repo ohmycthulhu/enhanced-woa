@@ -1,4 +1,9 @@
 # Class for managing execution options
+# Contains BenchmarkFunction as `function` argument and provides default values for every option
+# It has these purposes:
+# - Allows getting / setting default parameters alongside with validation
+# - Provides the bridge for interacting with BenchmarkFunction
+# - Counts the number of function evaluation
 class ExecutionOptions:
     DEFAULT_OPTIONS = {
         'iterations_count': 200,

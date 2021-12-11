@@ -1,6 +1,8 @@
 from src.algorithm import WOA
 
 
+# Class for managing algorithm run
+# Provides the interface for starting the algorithm with ExecutionOptions, checking the progress, and getting the result
 class AlgorithmManager:
     def __init__(self):
         self._running = None

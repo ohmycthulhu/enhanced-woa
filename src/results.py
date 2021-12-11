@@ -1,8 +1,10 @@
 import numpy as np
-import json
 from src.ui.input_manager import InputManager
 
 
+# Data class for holding the results of a single algorithm run
+# Contains the best value, parameters, function evaluation, and execution time
+# Also provides static methods for serializing and deserializing into JSON
 class RunResult:
     def __init__(self, best_value, best_params, evaluation_count, execution_time):
         self._best_value = best_value
@@ -44,6 +46,10 @@ class RunResult:
         )
 
 
+# Data class for holding the results of complete algorithm run
+# Contains the statistics about the best algorithm run, results of each run
+# Statistics are updated automatically on change results list
+# Also provides static methods for serializing and deserializing into JSON
 class WOAResult:
     def __init__(self, function_name, results=None, statistics=None):
         self._function_name = function_name
