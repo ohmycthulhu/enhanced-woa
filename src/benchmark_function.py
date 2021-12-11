@@ -1,6 +1,8 @@
 import numpy as np
+from src import functions
 
 
+# Function used for Good Point Set initialization
 def is_prime(n):
     if n % 2 == 0 and n > 2:
         return False
@@ -10,6 +12,16 @@ def is_prime(n):
     return True
 
 
+# Class that provides the necessary interface to benchmark function
+# Contains methods for:
+# - getting / setting hyperparameters
+# - getting the list of all hyperparameters
+# - for evaluation the function and getting the results
+# - constraining the parameters according to the save constraints
+# - checking whether function hyperparameters are valid
+# - generating set of random parameters with Good Point Set
+# HOF is Higher Order Function. It receives expanded list of hyperparameters and returns a function that takes
+# `dimension` number of arguments in order to return the result
 class BenchmarkFunction:
     def __init__(self, hof, hyperparams, hyperparameter_defaults, dimension, constraints, name=None):
         self._hof = hof
@@ -140,3 +152,40 @@ class BenchmarkFunction:
     @property
     def name(self):
         return self._name
+
+
+# List of all available functions
+AVAILABLE_FUNCTIONS = [
+    BenchmarkFunction(
+        name='Ackerman Function',
+        hof=lambda a, b, c: lambda *xs: functions.ackley_function(a, b, c, xs),
+        hyperparams=['a', 'b', 'c'],
+        hyperparameter_defaults={'a': 20, 'b': 0.2, 'c': 2 * 3.1415},
+        dimension=30,
+        constraints=[{'min': -32.768, 'max': 32.768} for _ in range(30)],
+    ),
+    BenchmarkFunction(
+        name='Rastrigin Function',
+        hof=lambda: lambda *xs: functions.rastrigin_function(xs),
+        hyperparams=[],
+        hyperparameter_defaults={},
+        dimension=30,
+        constraints=[{'min': -5.12, 'max': 5.12} for _ in range(30)],
+    ),
+    BenchmarkFunction(
+        name='Rosenblock Function',
+        hof=lambda: lambda *xs: functions.rosenbrok_function(xs),
+        hyperparams=[],
+        hyperparameter_defaults={},
+        dimension=30,
+        constraints=[{'min': -2.048, 'max': 2.048} for _ in range(30)],
+    ),
+    BenchmarkFunction(
+        name='Schwefel Function',
+        hof=lambda: lambda *xs: functions.schwefel_function(xs),
+        hyperparams=[],
+        hyperparameter_defaults={},
+        dimension=30,
+        constraints=[{'min': -500, 'max': 500} for _ in range(30)],
+    )
+]

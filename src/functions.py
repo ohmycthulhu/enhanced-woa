@@ -1,3 +1,4 @@
+# This file provides functions for evaluating and using as base for BenchmarkFunction
 import numpy as np
 
 
@@ -21,6 +22,4 @@ def rosenbrok_function(xs):
 
 
 def schwefel_function(xs):
-    d = len(xs)
-    return 418.9829 * d - sum([x * np.sin(np.sqrt(np.abs(x))) for x in xs])
-
+    return sum([-x * np.sin(np.sqrt(np.abs(x))) for x in xs])
