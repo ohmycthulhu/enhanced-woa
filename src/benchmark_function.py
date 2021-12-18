@@ -157,7 +157,7 @@ class BenchmarkFunction:
 # List of all available functions
 AVAILABLE_FUNCTIONS = [
     BenchmarkFunction(
-        name='Ackerman Function',
+        name='Ackley Function',
         hof=lambda a, b, c: lambda *xs: functions.ackley_function(a, b, c, xs),
         hyperparams=['a', 'b', 'c'],
         hyperparameter_defaults={'a': 20, 'b': 0.2, 'c': 2 * 3.1415},
