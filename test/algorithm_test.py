@@ -1,5 +1,6 @@
 from src.execution_options import ExecutionOptions
 from src.algorithm import WOARun, WOA
+from src.application import Application
 import test_helpers
 import factory
 import json
@@ -107,6 +108,7 @@ def complete_algorithm_run_test():
     return True
 
 
+Application().boot()
 test_result = test()
 if test_result:
     print('Algorithm test passed successfully!')

@@ -12,6 +12,7 @@ def get_benchmark_function():
     ]
 
     return BenchmarkFunction(
+        name='factory_func_1',
         hof=lambda x, y: lambda z: z * (x ** 2 + y),
         hyperparams=hyperparameters,
         hyperparameter_defaults=defaults,
@@ -29,6 +30,7 @@ def get_minimization_function():
         {'min': -32.76, 'max': 32.76},
     ]
     return BenchmarkFunction(
+        name='ackley_test',
         hof=lambda a, b, c: lambda *xs: ackley_function(a, b, c, xs),
         hyperparams=hyperparameters,
         hyperparameter_defaults=defaults,

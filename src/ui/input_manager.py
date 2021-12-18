@@ -31,8 +31,8 @@ class InputManager:
         return exists(path)
 
     def save_json(self, obj, path):
-        dir_name = '/'.join(path.split('/')[:-1])
-        if not exists(dir_name):
+        dir_name = '/'.join(path.split('/')[:-1]).strip()
+        if not exists(dir_name) and dir_name != '':
             os.mkdir(dir_name)
 
         with open(path, 'w') as file:
