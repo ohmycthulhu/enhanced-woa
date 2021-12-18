@@ -7,11 +7,11 @@ for Pilot Allocation in Underwater Acoustic OFDM Systems**(RONGKUN JIANG 1 , XUE
 The code uses Python3, `matplotlib`, `numpy` and virtual python environment for package management.
 
 ## Table of content
-- [How to run the code](how-to-run-the-code)
-- [Running user interface](running-user-interface)
-- [Running all functions](running-all-functions)
-- [Visualizing the evaluation](visualizing-the-evaluation)
-- [Structure of the project](structure-of-the-project)
+- [How to run the code](#how-to-run-the-code)
+- [Running user interface](#running-user-interface)
+- [Running all functions](#running-all-functions)
+- [Visualizing the evaluation](#visualizing-the-evaluation)
+- [Structure of the project](#structure-of-the-project)
 
 
 ## How to run the code
