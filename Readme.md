@@ -1,8 +1,8 @@
 # Enhanced Whale Optimization Algorithm
 
-The repository contains the implementation for Enhanced Whale Optimization algorithm, discussed in
+The repository contains the implementation for Enhanced Whale Optimization algorithm, discussed in the
 **Joint Compressed Sensing and  Enhanced Whale Optimization Algorithm 
-for Pilot Allocation in Underwater Acoustic OFDM Systems**(RONGKUN JIANG 1 , XUETIAN WANG 1 , SHAN CAO 2 , JIAFEI ZHAO 1 , and XIAORAN LI 1, 2018).
+for Pilot Allocation in Underwater Acoustic OFDM Systems**(RONGKUN JIANG 1 , XUETIAN WANG 1 , SHAN CAO 2 , JIAFEI ZHAO 1 , and XIAORAN LI 1, 2018) [article](https://ieeexplore.ieee.org/abstract/document/8764546/).
 
 The code uses Python3, `matplotlib`, `numpy`, and virtual python environment for package management.
 
