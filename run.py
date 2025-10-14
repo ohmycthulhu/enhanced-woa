@@ -4,7 +4,7 @@ from src.benchmark_function import AVAILABLE_FUNCTIONS
 from src.application import Application
 
 
-def run_function(path, benchmark_f0unction):
+def run_function(path, benchmark_function):
     execution_options = ExecutionOptions(function=benchmark_function)
     execution_options.execution_params = {
         'runs_count': 10,
